@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EZ_StartUp | Browse Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+<style>
+    /* --- 1. PREMIUM DARK GLASS VARIABLES --- */
+    :root {
+        /* Background: Rich Deep Slate */
+        --rich-bg: #0B1120; 
+        
+        /* NEW ACCENT: Electric Violet */
+        --primary-accent: #8B5CF6; 
+        
+        /* Text Colors */
+        --text-light: #FFFFFF;
+        --text-muted-light: #94A3B8;
+        
+        /* Glass Effect Variables */
+        --glass-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: 1px solid rgba(255, 255, 255, 0.08); 
+        --glass-blur: blur(16px);
+        --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+    }
+
+    /* --- 2. GLOBAL RESET --- */
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--rich-bg);
+        color: var(--text-light);
+        line-height: 1.7;
+        scroll-behavior: smooth;
+        background-image: radial-gradient(circle at 50% 0%, #2e1065 0%, #0B1120 50%);
+        background-attachment: fixed;
+    }
+
+    /* Force headings to white */
+    h1, h2, h3, h4, h5, h6, .navbar-brand, .hero-title, .card-title {
+        color: var(--text-light) !important;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+    }
+
+    /* Text Muted Overrides */
+    .text-muted { color: var(--text-muted-light) !important; }
+    .lead { color: #cbd5e1; }
+
+    /* Remove Bootstrap light backgrounds */
+    .bg-light, .bg-white { background-color: transparent !important; }
+
+    /* --- 3. NAVBAR (Dark Glass) --- */
+    .navbar {
+        background: rgba(11, 17, 32, 0.6) !important;
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur);
+        border-bottom: var(--glass-border);
+        box-shadow: none !important;
+        padding: 0.8rem 0;
+    }
+    .navbar-light .navbar-nav .nav-link { color: rgba(255,255,255,0.8); font-weight: 500; }
+    .navbar-light .navbar-nav .nav-link.active,
+    .navbar-light .navbar-nav .nav-link:hover { color: var(--primary-accent); }
+    
+    .navbar-light .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+    .navbar-toggler { border-color: rgba(255,255,255,0.1); }
+
+    /* --- 4. HEADER SECTION --- */
+    .hero-title {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+        text-shadow: 0 0 40px rgba(139, 92, 246, 0.3); /* Purple glow */
+    }
+
+    /* --- 5. GLASS CARDS --- */
+    .service-card, .industry-card, .pricing-card, .listing-card, .card {
+        border: var(--glass-border);
+        background: var(--glass-bg);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur);
+        box-shadow: var(--glass-shadow);
+        border-radius: 16px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        overflow: hidden;
+        height: 100%;
+        color: var(--text-light);
+    }
+
+    .card-body { color: var(--text-muted-light); }
+    .card.shadow-sm { box-shadow: var(--glass-shadow) !important; }
+
+    /* Hover State: Purple Glow */
+    .listing-card:hover {
+        transform: translateY(-8px);
+        border-color: rgba(139, 92, 246, 0.5);
+        box-shadow: 0 20px 50px rgba(139, 92, 246, 0.15);
+    }
+
+    /* --- 6. PAGE SPECIFICS --- */
+    .listing-img { height: 200px; object-fit: cover; opacity: 0.85; transition: 0.3s; }
+    .listing-card:hover .listing-img { opacity: 1; }
+    
+    .category-badge {
+        position: absolute; top: 15px; right: 15px;
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: white;
+        padding: 5px 12px;
+        border-radius: 30px;
+        font-size: 0.75rem;
+        backdrop-filter: blur(4px);
+    }
+
+    /* Nav Pills */
+    .nav-pills .nav-link {
+        color: var(--text-muted-light);
+        background-color: transparent;
+        border: var(--glass-border);
+        font-weight: 600;
+        border-radius: 50px;
+        padding: 10px 25px;
+        margin: 0 5px 10px;
+        transition: all 0.3s ease;
+    }
+    .nav-pills .nav-link.active {
+        background-color: var(--primary-accent);
+        color: white;
+        border-color: var(--primary-accent);
+        box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
+    }
+    .nav-pills .nav-link:hover:not(.active) {
+        background-color: rgba(255,255,255,0.05);
+        color: white;
+    }
+
+    .service-price { color: var(--primary-accent); font-weight: 700; }
+
+    /* Forms */
+    .form-control {
+        background: var(--glass-bg);
+        border: var(--glass-border);
+        color: white;
+        backdrop-filter: var(--glass-blur);
+    }
+    .form-control::placeholder { color: #64748b; }
+    .form-control:focus {
+        background-color: rgba(255, 255, 255, 0.08);
+        border-color: var(--primary-accent);
+        color: white;
+        box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+    }
+    .form-label { color: var(--text-light); }
+
+    /* --- 7. BUTTONS --- */
+    .btn-primary {
+        background-color: var(--primary-accent);
+        border-color: var(--primary-accent);
+        padding: 0.5rem 1.2rem;
+        font-weight: 600;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+        transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+        background-color: #7c3aed;
+        border-color: #7c3aed;
+        box-shadow: 0 6px 25px rgba(139, 92, 246, 0.6);
+        transform: translateY(-2px);
+    }
+    
+    .btn-outline-primary {
+        color: var(--text-light);
+        border-color: rgba(255,255,255,0.2);
+    }
+    .btn-outline-primary:hover {
+        background-color: var(--primary-accent);
+        border-color: var(--primary-accent);
+        box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+    }
+    
+    /* Modals */
+    .modal-content {
+        background: #0B1120;
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        color: white;
+        box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    }
+    .modal-header, .modal-footer { border-color: rgba(255,255,255,0.05); }
+    .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
+
+    /* --- 8. FOOTER --- */
+    footer {
+        background: transparent !important;
+        padding: 80px 0 30px;
+        border-top: var(--glass-border);
+        color: #94a3b8;
+    }
+
+    /* --- 9. RESPONSIVE --- */
+    @media (max-width: 768px) {
+        .hero-title { font-size: 2.5rem; }
+    }
+</style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">EZ_StartUp</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="services.html">Browse Services</a></li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-outline-primary btn-sm" href="register.html">Provider Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="py-5 text-center">
+        <div class="container">
+            <h1 class="hero-title fw-bold">Marketplace</h1>
+            <p class="lead opacity-75">Find verified experts to build your business.</p>
+        </div>
+    </section>
+
+    <div class="container py-3">
+        
+        <div class="row justify-content-center mb-5">
+            <div class="col-12">
+                <ul class="nav nav-pills justify-content-lg-center justify-content-start" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="pills-restaurant-tab" data-bs-toggle="pill" data-bs-target="#pills-restaurant" type="button">🍔 Restaurant</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-tech-tab" data-bs-toggle="pill" data-bs-target="#pills-tech" type="button">💻 Tech & SaaS</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-retail-tab" data-bs-toggle="pill" data-bs-target="#pills-retail" type="button">🛍️ Retail</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-beauty-tab" data-bs-toggle="pill" data-bs-target="#pills-beauty" type="button">💅 Beauty & Spa</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-marketing-tab" data-bs-toggle="pill" data-bs-target="#pills-marketing" type="button">📢 Marketing</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-admin-tab" data-bs-toggle="pill" data-bs-target="#pills-admin" type="button">💼 Admin & Ops</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab-content" id="pills-tabContent">
+
+            <div class="tab-pane fade show active" id="pills-restaurant" role="tabpanel">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card listing-card shadow-sm">
+                            <div class="position-relative">
+                                <img src="https://picsum.photos/400/250?random=1" class="listing-img" alt="Kitchen">
+                                <span class="category-badge">Infrastructure</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Commercial Kitchen Setup</h5>
+                                <p class="text-muted small">Full stainless steel installation, ventilation, and fire safety compliance.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">Est. $25k</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card shadow-sm">
+                            <div class="position-relative">
+                                <img src="https://picsum.photos/400/250?random=2" class="listing-img" alt="License">
+                                <span class="category-badge">Legal</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Liquor Licensing Bundle</h5>
+                                <p class="text-muted small">Complete handling of state liquor authority applications.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">$3,000 Fixed</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card shadow-sm">
+                            <div class="position-relative">
+                                <img src="https://picsum.photos/400/250?random=3" class="listing-img" alt="Menu">
+                                <span class="category-badge">Creative</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Menu Engineering</h5>
+                                <p class="text-muted small">Professional menu design focused on psychology and profit margins.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">$800 Fixed</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-tech" role="tabpanel">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card listing-card shadow-sm">
+                            <div class="position-relative">
+                                <img src="https://picsum.photos/400/250?random=4" class="listing-img" alt="Tech">
+                                <span class="category-badge">Development</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">MVP App Development</h5>
+                                <p class="text-muted small">Get your React Native prototype ready for investors in 6 weeks.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">$10k - $20k</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card shadow-sm">
+                            <div class="position-relative">
+                                <img src="https://picsum.photos/400/250?random=5" class="listing-img" alt="Law">
+                                <span class="category-badge">Legal</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Delaware C-Corp Setup</h5>
+                                <p class="text-muted small">Standard incorporation package including post-incorporation docs.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">$900 Fixed</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card shadow-sm">
+                            <div class="position-relative">
+                                <img src="https://picsum.photos/400/250?random=6" class="listing-img" alt="Pitch">
+                                <span class="category-badge">Consulting</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Pitch Deck Design</h5>
+                                <p class="text-muted small">Professional 15-slide deck design for Seed/Series A fundraising.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">$1,500 Fixed</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-retail" role="tabpanel">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card listing-card shadow-sm">
+                            <img src="https://picsum.photos/400/250?random=7" class="listing-img" alt="Retail">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Shopify Store Setup</h5>
+                                <p class="text-muted small">Custom theme design, payments, and inventory sync.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">$2,000 Fixed</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card shadow-sm">
+                            <img src="https://picsum.photos/400/250?random=8" class="listing-img" alt="Photo">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Product Photography</h5>
+                                <p class="text-muted small">White-background studio shots for 50 SKUs. Retouching included.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">$45/Product</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card shadow-sm">
+                            <img src="https://picsum.photos/400/250?random=9" class="listing-img" alt="Logistics">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">3PL Logistics Setup</h5>
+                                <p class="text-muted small">Connect your store with fulfillment centers for 2-day shipping.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">Custom Quote</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-beauty" role="tabpanel">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card listing-card shadow-sm">
+                            <img src="https://picsum.photos/400/250?random=10" class="listing-img" alt="Salon">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Salon Interior Fitout</h5>
+                                <p class="text-muted small">Luxury plumbing, lighting, and station setup for 10-chair salons.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">$15k Starting</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card shadow-sm">
+                            <img src="https://picsum.photos/400/250?random=11" class="listing-img" alt="Supplies">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Wholesale Supply Chain</h5>
+                                <p class="text-muted small">Access to premium hair and skin products at distributor rates.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">Subscription</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card shadow-sm">
+                            <img src="https://picsum.photos/400/250?random=12" class="listing-img" alt="Cert">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Health Inspection Audit</h5>
+                                <p class="text-muted small">Pre-opening check to ensure your spa passes city health inspections.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">$500 Fixed</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-marketing" role="tabpanel">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card listing-card shadow-sm">
+                            <img src="https://picsum.photos/400/250?random=13" class="listing-img" alt="Brand">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Full Brand Identity</h5>
+                                <p class="text-muted small">Logo, color palette, typography, and brand guideline book.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">$2,500 Fixed</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card shadow-sm">
+                            <img src="https://picsum.photos/400/250?random=14" class="listing-img" alt="Social">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Launch Social Campaign</h5>
+                                <p class="text-muted small">30 days of content and ad management for your grand opening.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">$1,800/mo</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card shadow-sm">
+                            <img src="https://picsum.photos/400/250?random=15" class="listing-img" alt="Web">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">SEO & Local Maps</h5>
+                                <p class="text-muted small">Rank high on Google Maps when people search for your business.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">$600/mo</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-admin" role="tabpanel">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card listing-card shadow-sm">
+                            <img src="https://picsum.photos/400/250?random=16" class="listing-img" alt="Acct">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Startup Accounting</h5>
+                                <p class="text-muted small">Bookkeeping setup on Quickbooks/Xero and tax filing prep.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">$250/mo</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card shadow-sm">
+                            <img src="https://picsum.photos/400/250?random=17" class="listing-img" alt="Office">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Virtual Office Address</h5>
+                                <p class="text-muted small">Prestigious business address for mail and registration.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">$50/mo</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Contact Provider</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Your Name</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Message</label>
+                            <textarea class="form-control" rows="3" placeholder="Hi, I am interested in this service for my new startup..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="alert('Inquiry Sent!')">Send Inquiry</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-4 mt-auto">
+        <div class="container text-center">
+            <small>&copy; 2025 LaunchPad Inc. All rights reserved.</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
